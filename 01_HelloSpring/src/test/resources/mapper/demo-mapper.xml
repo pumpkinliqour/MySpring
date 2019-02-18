@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="demo">
+	<insert id="insertDev" parameterType="dev">
+		INSERT DEV INTO VALUES(SEQ_DEV_NO.NEXTVAL, #{devName}, #{devAge}, #{devEmail}, #{devGender},
+		<!-- 배열 값 넣기 -->
+		<foreach collection="devLang" item="lang" open="'" close="'" separator=",">
+			${lang}
+		</foreach> 
+		)
+	</insert>
+</mapper>
