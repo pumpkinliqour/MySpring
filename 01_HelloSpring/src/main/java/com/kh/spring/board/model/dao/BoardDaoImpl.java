@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.spring.board.model.vo.Attachment;
+
 @Repository
 public class BoardDaoImpl implements BoardDao {
 
@@ -24,4 +26,16 @@ public class BoardDaoImpl implements BoardDao {
 		RowBounds rows=new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return session.selectList("board.boardList", null, rows);
 	}
+
+	@Override
+	public int insertBoard(Map<String, String> board) {
+		return session.insert("board.insertBoard",board);
+	}
+
+	@Override
+	public int insertAttach(Attachment a) {
+		return session.insert("board.insertAttach", a);
+	}
+	
+	
 }

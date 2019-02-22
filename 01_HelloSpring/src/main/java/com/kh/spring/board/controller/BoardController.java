@@ -1,20 +1,29 @@
 package com.kh.spring.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.board.model.service.BoardService;
-import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Attachment;
 
 @Controller
 public class BoardController {
+	
+	private Logger logger=Logger.getLogger(BoardController.class);
 	
 	@Autowired
 	BoardService service;
@@ -100,10 +109,10 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	@RequestMapping("/board/boardWrite.do")
+	@RequestMapping("/board/boardForm.do")
 	public String boardWrite() {
 		
-		return "board/boardWrite";
+		return "board/boardForm";
 	}
 	
 	@RequestMapping("/board/boardView.do")
@@ -112,9 +121,58 @@ public class BoardController {
 		return "board/boardView";
 	}
 	
-	@RequestMapping("/board/boardWriteEnd.do")
-	public String boardWriteEnd(HttpServletRequest request, Board board) {
+	@RequestMapping("/board/boardFormEnd.do")
+	public String boardFormEnd(HttpServletRequest request, String boardTitle, String boardContent, String boardWriter, MultipartFile[] upFile) {
 		
-		return "";
+		Map<String,String> board=new HashMap<String,String>(); //보드에 관한것들
+		board.put("title", boardTitle);
+		board.put("writer", boardWriter);
+		board.put("content", boardContent);
+		
+		logger.debug("과연?"+board);
+		
+		ArrayList<Attachment> files=new ArrayList<Attachment>(); //첨부파일에 관한것들
+		
+		//저장경로
+		String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/board");
+				
+		for(MultipartFile f : upFile) {
+			if(!f.isEmpty()) {
+				//파일명을 생성(rename)
+				String oriFileName=f.getOriginalFilename();
+				String ext=oriFileName.substring(oriFileName.lastIndexOf(".")); //확장자까지
+				//rename규칙을 설정
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int randomV=(int)(Math.random()*1000);
+				String reName=sdf.format(System.currentTimeMillis())+"_"+randomV+ext;
+				try {
+					f.transferTo(new File(saveDir+"/"+reName));
+				}
+				catch(IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				Attachment att=new Attachment();
+				att.setReNamedFileName(reName);
+				att.setOriginalFileName(oriFileName);
+				files.add(att);
+			}
+		}
+		int result=service.insertBoard(board, files);
+		
+		String msg="";
+		String loc="/board/boardList.do";
+		
+		if(result>0) {
+			msg="성공";
+		}
+		else {
+			msg="실패";
+		}
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		
+		return "common/msg";
 	}
 }

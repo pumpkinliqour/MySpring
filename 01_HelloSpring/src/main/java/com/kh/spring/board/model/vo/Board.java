@@ -3,28 +3,26 @@ package com.kh.spring.board.model.vo;
 import java.sql.Date;
 
 public class Board {
+
 	private int boardNo;
 	private String boardTitle;
 	private String boardWriter;
 	private String boardContent;
-	private String boardOriginalFileName;
-	private String boardRenamedFileName;
 	private Date boardDate;
 	private int boardReadCount;
 	
 	public Board() {
 		// TODO Auto-generated constructor stub
+
 	}
 
-	public Board(int boardNo, String boardTitle, String boardWriter, String boardContent, String boardOriginalFileName,
-			String boardRenamedFileName, Date boardDate, int boardReadCount) {
+	public Board(int boardNo, String boardTitle, String boardWriter, String boardContent, Date boardDate,
+			int boardReadCount) {
 		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
 		this.boardWriter = boardWriter;
 		this.boardContent = boardContent;
-		this.boardOriginalFileName = boardOriginalFileName;
-		this.boardRenamedFileName = boardRenamedFileName;
 		this.boardDate = boardDate;
 		this.boardReadCount = boardReadCount;
 	}
@@ -61,22 +59,6 @@ public class Board {
 		this.boardContent = boardContent;
 	}
 
-	public String getBoardOriginalFileName() {
-		return boardOriginalFileName;
-	}
-
-	public void setBoardOriginalFileName(String boardOriginalFileName) {
-		this.boardOriginalFileName = boardOriginalFileName;
-	}
-
-	public String getBoardRenamedFileName() {
-		return boardRenamedFileName;
-	}
-
-	public void setBoardRenamedFileName(String boardRenamedFileName) {
-		this.boardRenamedFileName = boardRenamedFileName;
-	}
-
 	public Date getBoardDate() {
 		return boardDate;
 	}
@@ -96,9 +78,7 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardWriter=" + boardWriter
-				+ ", boardContent=" + boardContent + ", boardOriginalFileName=" + boardOriginalFileName
-				+ ", boardRenamedFileName=" + boardRenamedFileName + ", boardDate=" + boardDate + ", boardReadCount="
-				+ boardReadCount + "]";
+				+ ", boardContent=" + boardContent + ", boardReadCount=" + boardReadCount + "]";
 	}
 	
 	

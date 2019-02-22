@@ -42,10 +42,6 @@
       text-align: left;
     }
      
-    div > #paging {
-      text-align: center;
-    }
-     
     .hit {
       animation-name: blink;
       animation-duration: 1.5s;
@@ -58,8 +54,8 @@
     /* 애니메이션 지점 설정하기 */
     /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
     @keyframes blink {
-      from {color: white;}
-      30% {color: yellow;}
+      from {color: yellow;}
+      30% {color: orange;}
       to {color: red; font-weight: bold;}
       /* 0% {color:white;}
       30% {color: yellow;}
@@ -74,22 +70,9 @@
       <b>게시판 (전체 글: ${count})</b>
     </div>
    	
-   	<c:if test="${sessionScope.userId!=null }">
     <div id="write">
-      <button type="submit" class="btn btn-default" onclick="location.href='${path }/board/boardWrite.do'">글쓰기</button>
+      <button type="submit" class="btn btn-default" onclick="location.href='${path }/board/boardForm.do'">글쓰기</button>
     </div>
-    </c:if>
-    <c:if test="${sessionScope.userId==null }">
-    <div id="write">
-      <button class="btn btn-default" onclick="error();">글쓰기</button>
-    </div>
-    </c:if>
-    <script>
-    	function error(){
-    		alert("로그인 하십시오.");
-    	}
-    </script>
-    
      
     <div>
       <table class="table table-striped table-bordered table-hover">
@@ -106,18 +89,18 @@
         <tbody>
           <c:forEach var="board" items="${list}" varStatus="status">
             <tr>
-              <td>${board.BOARDNO}</td>
+              <td>${status.count}</td>
               <td id="title">
                 <a href="${path }/board/boardView.do">${board.BOARDTITLE}</a>
-                <c:if test="${board.BOARDREADCOUNT>=1}">
+                <c:if test="${board.BOARDREADCOUNT>=10}">
                   <span class="hit">hit!</span>
                 </c:if>
               </td>
               <td>${board.BOARDWRITER}</td>
               <td>${board.BOARDDATE}</td>
               <td>
-              <c:if test="${not empty notice.FILEPATH }">
-              		<img alt='첨부파일' src="${path }/images/file.png" width="16px">
+              <c:if test="${board.ATTACHCOUNT>0}">
+              		<img alt='첨부파일' src="${path }/resources/images/file.png" width="20px">
               </c:if>
               </td>
               <td>${board.BOARDREADCOUNT}</td>

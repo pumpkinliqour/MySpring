@@ -24,6 +24,17 @@
 	<context:component-scan base-package="com.kh.spring" />
 	<!-- <beans:bean id="ex" class="com.kh.spring.Test"></beans:bean> -->
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/*"/>
+			<beans:bean id="loggerInterceptor" class="com.kh.spring.common.LoggerInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<!-- 파일 업로드 객체 설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/> <!-- 10메가 -->
+	</beans:bean>
 	
 </beans:beans>
 

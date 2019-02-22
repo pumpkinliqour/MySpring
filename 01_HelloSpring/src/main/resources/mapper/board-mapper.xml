@@ -10,6 +10,15 @@
 	</select>
 
 	<select id="boardList" resultMap="boardMap">
-		SELECT * FROM BOARD ORDER BY BOARDDATE DESC
+		SELECT A.*,(SELECT COUNT(*) FROM ATTACHMENT WHERE BOARDNO=A.BOARDNO) AS ATTACHCOUNT FROM BOARD A ORDER BY BOARDDATE DESC
 	</select>
+	
+	<insert id="insertBoard" parameterType="map">
+	INSERT INTO BOARD VALUES(SEQ_BOARDNO.NEXTVAL,#{title},#{writer},#{content},DEFAULT,DEFAULT)
+	<selectKey keyProperty="boardNo" resultType="string" order="AFTER"> SELECT SEQ_BOARDNO.CURRVAL FROM DUAL</selectKey>
+	</insert>
+	
+	<insert id="insertAttach" parameterType="com.kh.spring.board.model.vo.Attachment">
+		INSERT INTO ATTACHMENT VALUES(SEQ_ATTACHMENTNO.NEXTVAL, #{boardNo}, #{originalFileName}, #{reNamedFileName}, SYSDATE, DEFAULT, DEFAULT)
+	</insert>
 </mapper>
