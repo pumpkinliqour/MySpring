@@ -52,4 +52,14 @@ public class BoardServiceImpl implements BoardService {
 		
 		return result;
 	}
+	
+	@Override
+	public Map<String, String> selectBoard(int boardNo) {
+		return dao.selectBoard(boardNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectAttachList(int boardNo) {
+		return dao.selectAttachList(boardNo);
+	}
 }

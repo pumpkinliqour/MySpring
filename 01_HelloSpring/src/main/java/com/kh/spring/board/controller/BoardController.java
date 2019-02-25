@@ -1,14 +1,19 @@
 package com.kh.spring.board.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.board.model.vo.Attachment;
@@ -116,9 +122,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/board/boardView.do")
-	public String boardView() {
+	public ModelAndView boardView(int boardNo) {
+		ModelAndView mv=new ModelAndView();
+		Map<String,String> board=service.selectBoard(boardNo);
+		List<Map<String,String>> attach=service.selectAttachList(boardNo);
 		
-		return "board/boardView";
+		mv.addObject("board", board);
+		mv.addObject("attach", attach);
+		mv.setViewName("board/boardView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("/board/boardFormEnd.do")
@@ -174,5 +187,47 @@ public class BoardController {
 		
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/board/fileDownLoad.do")
+	public void fileDownLoad(String oName, String rName, HttpServletRequest request, HttpServletResponse response) {
+		BufferedInputStream bis=null;
+		ServletOutputStream sos=null;
+		String dir=request.getSession().getServletContext().getRealPath("/resources/upload/board");
+		File savedFile=new File(dir+"/"+rName); //경로
+		try {
+			FileInputStream fis=new FileInputStream(savedFile);
+			bis=new BufferedInputStream(fis);
+			sos=response.getOutputStream();
+			String resFileName=""; //파일명처리하기 (인코딩)
+			boolean isMSIE=request.getHeader("user-agent").indexOf("MSIE")!=-1||request.getHeader("user-agent").indexOf("Trident")!=-1;
+			if(isMSIE) {
+				resFileName=URLEncoder.encode(oName, "UTF-8");
+				resFileName=resFileName.replaceAll("\\+", "%20");
+			}
+			else {
+				resFileName=new String(oName.getBytes("UTF-8"), "ISO-8859-1"); //이렇게 해야 한글이 안깨짐
+			}
+			response.setContentType("application/octet-stream;charset=utf-8");
+			response.addHeader("Content-Disposition", "attachment;fileName=\""+resFileName+"\"");
+			response.setContentLength((int)savedFile.length()); //파일길이설정
+			
+			int read=0;
+			while((read=bis.read())!=-1) {
+				sos.write(read);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+			sos.close();
+			bis.close();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+		}
 	}
 }

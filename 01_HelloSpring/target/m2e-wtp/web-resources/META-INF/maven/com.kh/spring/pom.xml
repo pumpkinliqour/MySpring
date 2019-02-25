@@ -57,7 +57,7 @@
 		    <artifactId>commons-dbcp</artifactId>
 		    <version>1.4</version>
 		</dependency>
-
+ 
 				
 				<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 <dependency>
@@ -101,7 +101,15 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
+		</dependency>
+		<!-- AspectJWeaver -->
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+
 		
 		<!-- Logging -->
 		<dependency>

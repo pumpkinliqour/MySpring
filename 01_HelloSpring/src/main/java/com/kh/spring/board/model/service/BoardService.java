@@ -9,4 +9,6 @@ public interface BoardService {
 	int boardCount();
 	List<Map<String,String>> boardList(int cPage, int numPerPage);
 	int insertBoard(Map<String, String> board, List<Attachment> files);
+	Map<String,String> selectBoard(int boardNo);
+	List<Map<String,String>> selectAttachList(int boardNo);
 }

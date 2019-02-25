@@ -21,4 +21,12 @@
 	<insert id="insertAttach" parameterType="com.kh.spring.board.model.vo.Attachment">
 		INSERT INTO ATTACHMENT VALUES(SEQ_ATTACHMENTNO.NEXTVAL, #{boardNo}, #{originalFileName}, #{reNamedFileName}, SYSDATE, DEFAULT, DEFAULT)
 	</insert>
+	
+	<select id="selectBoard" parameterType="_int" resultType="map">
+		SELECT * FROM BOARD WHERE BOARDNO=#{boardNo}
+	</select>
+	
+	<select id="selectAttach" parameterType="_int" resultType="map"> 
+		SELECT * FROM ATTACHMENT WHERE BOARDNO=#{boardNo} 
+	</select>
 </mapper>

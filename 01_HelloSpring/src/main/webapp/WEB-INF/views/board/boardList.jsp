@@ -91,7 +91,7 @@
             <tr>
               <td>${status.count}</td>
               <td id="title">
-                <a href="${path }/board/boardView.do">${board.BOARDTITLE}</a>
+                <a href="${path }/board/boardView.do?boardNo=${board.BOARDNO}">${board.BOARDTITLE}</a>
                 <c:if test="${board.BOARDREADCOUNT>=10}">
                   <span class="hit">hit!</span>
                 </c:if>

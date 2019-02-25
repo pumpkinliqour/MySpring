@@ -56,14 +56,14 @@ function validate(){
             </div>
            <div class="input-group mb-3" style="padding:0px;">
                 <div class="input-group-prepend" style="padding:0px;">
-                    <span class="input-group-text">첨부파일①</span>
+                    <label for="upFile1"><span class="input-group-text">첨부파일①</span></label>
                 </div>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="upFile" id="upFile1">
                     <label class="custom-file-label" for="upFile1"></label>
                 </div>
                 <div class="input-group-prepend" style="padding:0px;">
-                    <span class="input-group-text">첨부파일②</span>
+                    <label for="upFile2"><span class="input-group-text">첨부파일②</span></label>
                 </div>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="upFile" id="upFile2">
