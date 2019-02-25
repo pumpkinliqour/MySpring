@@ -92,7 +92,7 @@ div#member-container span.error{color:red;}
 				<label class="col-sm-2 col-form-label" style="font-size:15px; font-weight:bold;">성별</label>
 				<div class="col-sm-10">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="gender" 	id="gender0" value="M"/>
+						<input class="form-check-input" type="radio" name="gender" 	id="gender0" value="M" checked="checked"/>
 						<label class="form-check-label" for="gender0" style="font-size:15px; font-weight:bold;">남</label>
 						<span>&nbsp;&nbsp;</span>
 						<input class="form-check-input" type="radio" name="gender" 	id="gender1" value="F"/>
