@@ -123,7 +123,7 @@ div#member-container span.error{color:red;}
 				<div class="col-sm-10">
 					<input id="address" name="address" type="text" class="form-control"/>
 				</div>
-			</div>
+			</div> 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label" style="font-size:15px; font-weight:bold;">취미</label>
 				<div class="col-sm-10">
