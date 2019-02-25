@@ -49,4 +49,9 @@ public class MemberServiceImpl implements MemberService {
 	public List<Map<String,String>> memberSearch(Map<String,String> map){
 		return dao.memberSearch(map);
 	}
+	
+	@Override
+	public int checkId(String userId) {
+		return dao.checkId(userId);
+	}
 }

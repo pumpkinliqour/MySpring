@@ -13,4 +13,5 @@ public interface MemberService {
 	int myPageUpdate(Member member);
 	Member selectMemberOne(String userId);
 	List<Map<String,String>> memberSearch(Map<String,String> map);
+	int checkId(String userId);
 }

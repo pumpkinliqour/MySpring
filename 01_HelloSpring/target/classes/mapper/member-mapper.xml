@@ -40,5 +40,9 @@
 	<select id="memberSearch" parameterType="map" resultMap="memberMap">
 		SELECT * FROM MEMBER WHERE ${searchType} LIKE '%'||#{keyword}||'%'
 	</select>
+	
+	<select id="selectUserId" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE USERID=#{userId}
+	</select>
 	<!-- 쿼리문 -->
 </mapper>

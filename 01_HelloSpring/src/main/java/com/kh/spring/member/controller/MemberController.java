@@ -121,7 +121,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberEnroll.do")
-	public String memberEnroll(Member member, Model model) {
+	public ModelAndView memberEnroll(Member member, ModelAndView mv) {
+		//패스워드 암호화
 		String rawPw=member.getPassword();
 		member.setPassword(bpeCode.encode(rawPw));
 		
@@ -140,10 +141,24 @@ public class MemberController {
 			loc="/member/member.do";
 		}
 		
-		model.addAttribute("msg", msg);
-		model.addAttribute("loc", loc);
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
 		
-		return "common/msg";
+		return mv;
+	}
+	
+	@RequestMapping("/member/memberCheckId.do")
+	public ModelAndView checkId(String userId, ModelAndView mv) throws Exception{
+		/*JSON으로 아이디 값 중복 확인하기*/
+		Map<String,Boolean> map=new HashMap<String,Boolean>();
+		boolean isId=service.checkId(userId)==0?false:true; /*만약 userId가 0이면 false, 1이면 true*/
+		map.put("isId", isId);
+		
+		mv.addAllObjects(map); //맵의 모든 값을 한번에 보냄.
+		mv.setViewName("jsonView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("/member/memberList.do")
@@ -241,5 +256,6 @@ public class MemberController {
 		
 		return mv;
 	}
+	
 	
 }

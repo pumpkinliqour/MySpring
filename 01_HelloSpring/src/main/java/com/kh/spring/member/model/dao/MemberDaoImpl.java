@@ -51,4 +51,9 @@ public class MemberDaoImpl implements MemberDao {
 	public List<Map<String,String>> memberSearch(Map<String,String> map){
 		return session.selectList("member.memberSearch", map);
 	}
+	
+	@Override
+	public int checkId(String userId) {
+		return session.selectOne("member.selectUserId", userId);
+	}
 }
